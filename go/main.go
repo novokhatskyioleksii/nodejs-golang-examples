@@ -1,38 +1,28 @@
 package main
 
 import (
-    // "encoding/json"
     "fmt"
     "net/http"
+    "strconv"
 )
 
-// type result struct {
-//     Result string `json:"result"`
-// }
-
-// var r *result = &result{
-//     Result: "Pong",
-// }
-
 func ping(w http.ResponseWriter, req *http.Request) {
-    // res, _ := json.Marshal(r)
-    // w.Write(res)
     fmt.Fprintf(w, "Pong")
 }
 
-func headers(w http.ResponseWriter, req *http.Request) {
+func sum(w http.ResponseWriter, req *http.Request) {
+    p1, _ := strconv.Atoi(req.URL.Query().Get("p1"))
+    p2, _ := strconv.Atoi(req.URL.Query().Get("p2"))
 
-    for name, headers := range req.Header {
-        for _, h := range headers {
-            fmt.Fprintf(w, "%v: %v\n", name, h)
-        }
-    }
+    sum := p1 + p2
+
+    fmt.Fprint(w, sum)
 }
 
 func main() {
 
     http.HandleFunc("/ping", ping)
-    http.HandleFunc("/headers", headers)
+    http.HandleFunc("/sum", sum)
 
     fmt.Print("Golang: Server is running at http://localhost:8090/")
     http.ListenAndServe(":8090", nil)

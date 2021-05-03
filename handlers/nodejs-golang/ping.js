@@ -1,7 +1,7 @@
 const { instantiate } = require('nodejs-golang');
 
 const nodejsGolangPingHandler = async (req, res) => {
-  await instantiate();
+  await instantiate('ping');
   console.time('Nodejs-Golang: ping');
   const result = global.GolangPing();
   console.timeEnd('Nodejs-Golang: ping');
