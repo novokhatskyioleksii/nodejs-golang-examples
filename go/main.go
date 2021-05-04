@@ -2,6 +2,7 @@ package main
 
 import (
     "crypto/md5"
+    "crypto/sha256"
     "encoding/hex"
     "fmt"
     "math/big"
@@ -65,12 +66,38 @@ func md5Array(w http.ResponseWriter, req *http.Request) {
     fmt.Fprint(w, n)
 }
 
+func sha256Worker(c chan string, wg *sync.WaitGroup) {
+    h := sha256.New()
+    h.Write([]byte("nodejs-golang"))
+    sha256_hash := hex.EncodeToString(h.Sum(nil))
+
+    c <- sha256_hash
+    wg.Done()
+}
+
+func sha256Array(w http.ResponseWriter, req *http.Request) {
+    n, _ := strconv.Atoi(req.URL.Query().Get("n"))
+
+    c := make(chan string, n)
+    var wg sync.WaitGroup
+
+    for i := 0; i < n; i++ {
+        wg.Add(1)
+        go sha256Worker(c, &wg)
+    }
+
+    wg.Wait()
+
+    fmt.Fprint(w, n)
+}
+
 func main() {
 
     http.HandleFunc("/ping", ping)
     http.HandleFunc("/sum", sum)
     http.HandleFunc("/fibonacci", fibonacci)
     http.HandleFunc("/md5", md5Array)
+    http.HandleFunc("/sha256", sha256Array)
 
     fmt.Print("Golang: Server is running at http://localhost:8090/")
     http.ListenAndServe(":8090", nil)
