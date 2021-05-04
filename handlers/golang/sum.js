@@ -25,7 +25,7 @@ const golangSumHandler = (req, res) => {
 
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
-      res.write(JSON.stringify({ result: Number(result) }));
+      res.write(JSON.stringify({ result }));
       res.end();
     });
   });

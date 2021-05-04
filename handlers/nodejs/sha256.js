@@ -21,7 +21,7 @@ const nodejsSha256Handler = async (req, res) => {
 
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
-  res.write(JSON.stringify({ result }));
+  res.write(JSON.stringify({ result: result.toString() }));
   res.end();
 };
 
