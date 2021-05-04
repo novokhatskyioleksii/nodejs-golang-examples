@@ -1,26 +1,27 @@
 const http = require('http');
 
-const golangFibonacciHandler = (req, res) => {
+const golangMd5Handler = (req, res) => {
   const url = new URL(req.url, 'http://localhost/').searchParams;
   const n = Number(url.get('n'));
+  if (n > 10000) throw new Error('Less than 10000, please');
 
   const options = {
     hostname: 'localhost',
     port: 8090,
-    path: `/fibonacci?n=${n}`,
+    path: `/md5?n=${n}`,
     method: 'GET',
   };
 
   let result = '';
 
-  console.time('Golang: fibonacci');
+  console.time('Golang: md5');
 
   const request = http.request(options, (response) => {
     response.on('data', (data) => {
       result += data;
     });
     response.on('end', () => {
-      console.timeEnd('Golang: fibonacci');
+      console.timeEnd('Golang: md5');
 
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
@@ -36,4 +37,4 @@ const golangFibonacciHandler = (req, res) => {
   request.end();
 };
 
-module.exports = golangFibonacciHandler;
+module.exports = golangMd5Handler;

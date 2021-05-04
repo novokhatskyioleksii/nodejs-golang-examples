@@ -1,10 +1,13 @@
 package main
 
 import (
+    "crypto/md5"
+    "encoding/hex"
     "fmt"
     "math/big"
     "net/http"
     "strconv"
+    "sync"
 )
 
 func ping(w http.ResponseWriter, req *http.Request) {
@@ -39,11 +42,35 @@ func fibonacci(w http.ResponseWriter, req *http.Request) {
     fmt.Fprint(w, n1)
 }
 
+func md5Worker(c chan string, wg *sync.WaitGroup) {
+    hash := md5.Sum([]byte("nodejs-golang"))
+
+    c <- hex.EncodeToString(hash[:])
+    wg.Done()
+}
+
+func md5Array(w http.ResponseWriter, req *http.Request) {
+    n, _ := strconv.Atoi(req.URL.Query().Get("n"))
+
+    c := make(chan string, n)
+    var wg sync.WaitGroup
+
+    for i := 0; i < n; i++ {
+        wg.Add(1)
+        go md5Worker(c, &wg)
+    }
+
+    wg.Wait()
+
+    fmt.Fprint(w, n)
+}
+
 func main() {
 
     http.HandleFunc("/ping", ping)
     http.HandleFunc("/sum", sum)
     http.HandleFunc("/fibonacci", fibonacci)
+    http.HandleFunc("/md5", md5Array)
 
     fmt.Print("Golang: Server is running at http://localhost:8090/")
     http.ListenAndServe(":8090", nil)

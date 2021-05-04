@@ -14,6 +14,10 @@ const nodejsFibonacciHandler = require('./handlers/nodejs/fibonacci');
 const nodejsGolangFibonacciHandler = require('./handlers/nodejs-golang/fibonacci');
 const golangFibonacciHandler = require('./handlers/golang/fibonacci');
 
+const nodejsMd5Handler = require('./handlers/nodejs/md5');
+const nodejsGolangMd5Handler = require('./handlers/nodejs-golang/md5');
+const golangMd5Handler = require('./handlers/golang/md5');
+
 const router = {
   'default': error404Handler,
 
@@ -28,6 +32,10 @@ const router = {
   'GET/nodejs/fibonacci': nodejsFibonacciHandler,
   'GET/nodejs-golang/fibonacci': nodejsGolangFibonacciHandler,
   'GET/golang/fibonacci': golangFibonacciHandler,
+
+  'GET/nodejs/md5': nodejsMd5Handler,
+  'GET/nodejs-golang/md5': nodejsGolangMd5Handler,
+  'GET/golang/md5': golangMd5Handler,
 };
 
 http
