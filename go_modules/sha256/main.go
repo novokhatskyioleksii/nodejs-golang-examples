@@ -13,6 +13,7 @@ func sha256Worker(c chan string, wg *sync.WaitGroup) {
     sha256_hash := hex.EncodeToString(h.Sum(nil))
 
     c <- sha256_hash
+
     wg.Done()
 }
 

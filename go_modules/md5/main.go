@@ -11,6 +11,7 @@ func md5Worker(c chan string, wg *sync.WaitGroup) {
     hash := md5.Sum([]byte("nodejs-golang"))
 
     c <- hex.EncodeToString(hash[:])
+
     wg.Done()
 }
 

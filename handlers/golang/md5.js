@@ -3,6 +3,7 @@ const http = require('http');
 const golangMd5Handler = (req, res) => {
   const url = new URL(req.url, 'http://localhost/').searchParams;
   const n = Number(url.get('n'));
+
   if (n > 10000) throw new Error('Less than 10000, please');
 
   const options = {

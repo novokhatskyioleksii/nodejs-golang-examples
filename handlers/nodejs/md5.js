@@ -9,11 +9,16 @@ const md5 = async (num) => {
 
 const nodejsMd5Handler = async (req, res) => {
   console.time('Nodejs: md5');
+
   const url = new URL(req.url, 'http://localhost/').searchParams;
   const n = Number(url.get('n'));
+
   if (n > 10000) throw new Error('Less than 10000, please');
+
   const result = await md5(n);
+
   console.timeEnd('Nodejs: md5');
+
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
   res.write(JSON.stringify({ result }));
