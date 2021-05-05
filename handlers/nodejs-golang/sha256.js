@@ -1,8 +1,4 @@
-const { instantiate } = require('nodejs-golang');
-
 const nodejsGolangSha256Handler = async (req, res) => {
-  await instantiate('sha256');
-
   console.time('Nodejs-Golang: sha256');
 
   const url = new URL(req.url, 'http://localhost/').searchParams;

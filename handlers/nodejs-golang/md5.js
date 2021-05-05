@@ -1,8 +1,4 @@
-const { instantiate } = require('nodejs-golang');
-
 const nodejsGolangMd5Handler = async (req, res) => {
-  await instantiate('md5');
-
   console.time('Nodejs-Golang: md5');
 
   const url = new URL(req.url, 'http://localhost/').searchParams;

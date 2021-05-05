@@ -1,8 +1,4 @@
-const { instantiate } = require('nodejs-golang');
-
 const nodejsGolangSumHandler = async (req, res) => {
-  await instantiate('sum');
-
   console.time('Nodejs-Golang: sum');
 
   const url = new URL(req.url, 'http://localhost/').searchParams;

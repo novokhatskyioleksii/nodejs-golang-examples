@@ -1,8 +1,4 @@
-const { instantiate } = require('nodejs-golang');
-
 const nodejsGolangFibonacciHandler = async (req, res) => {
-  await instantiate('fibonacci');
-
   console.time('Nodejs-Golang: fibonacci');
 
   const url = new URL(req.url, 'http://localhost/').searchParams;
