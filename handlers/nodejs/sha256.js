@@ -1,8 +1,8 @@
 const crypto = require('crypto');
 
-const sha256 = async (num) => {
+const sha256 = (num) => {
   for (let i = 0; i < num; i++) {
-    await crypto.createHash('sha256').update('nodejs-golang').digest('hex');
+    crypto.createHash('sha256').update('nodejs-golang').digest('hex');
   }
   return num;
 };
@@ -15,7 +15,7 @@ const nodejsSha256Handler = async (req, res) => {
 
   if (n > 10000) throw new Error('Less than 10000, please');
 
-  const result = await sha256(n);
+  const result = sha256(n);
 
   console.timeEnd('Nodejs: sha256');
 

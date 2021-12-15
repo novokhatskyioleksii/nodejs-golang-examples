@@ -1,8 +1,8 @@
 const crypto = require('crypto');
 
-const md5 = async (num) => {
+const md5 = (num) => {
   for (let i = 0; i < num; i++) {
-    await crypto.createHash('md5').update('nodejs-golang').digest('hex');
+    crypto.createHash('md5').update('nodejs-golang').digest('hex');
   }
   return num;
 };
@@ -15,7 +15,7 @@ const nodejsMd5Handler = async (req, res) => {
 
   if (n > 10000) throw new Error('Less than 10000, please');
 
-  const result = await md5(n);
+  const result = md5(n);
 
   console.timeEnd('Nodejs: md5');
 
